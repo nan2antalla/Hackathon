@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pronóstico del Clima</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Columna izquierda - Información del clima actual -->
+        <div class="left-panel">
+            <div class="weather-main">
+                <div class="weather-image">
+                    <img id="weather-icon" src="images/Soleado.jpg" alt="Clima actual">
+                    <div class="weather-overlay">
+                        <div class="weather-info">
+                            <h2 id="current-temp">22°C</h2>
+                            <p id="weather-description">Parcialmente nublado</p>
+                            <p id="location">Madrid, España</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="weather-details">
+                    <div class="detail-item">
+                        <i class="fas fa-eye"></i>
+                        <span>Visibilidad: 10 km</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-tint"></i>
+                        <span>Humedad: 65%</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-wind"></i>
+                        <span>Viento: 15 km/h</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-thermometer-half"></i>
+                        <span>Sensación: 24°C</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Columna derecha - Formulario y pronósticos -->
+        <div class="right-panel">
+            <!-- Formulario de selección -->
+            <div class="form-section">
+                <h3>Seleccionar Pronóstico</h3>
+                <form id="weather-form">
+                    <div class="form-group">
+                        <label for="date-input">Fecha:</label>
+                        <input type="date" id="date-input" name="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="region-input">Región:</label>
+                        <input type="text" id="region-input" name="region" placeholder="Seleccionar región" readonly>
+                        <button type="button" id="region-btn" class="region-btn">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </button>
+                    </div>
+                    <button type="submit" class="submit-btn">Obtener Pronóstico</button>
+                    <button type="button" id="test-weather-btn" class="test-btn">Cambiar Clima (Prueba)</button>
+                </form>
+            </div>
+
+            <!-- Cards de pronóstico por hora -->
+            <div class="forecast-section">
+                <h3>Pronóstico por Hora</h3>
+                <div class="forecast-cards" id="forecast-cards">
+                    <!-- Las cards se generarán dinámicamente -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para selección de región -->
+    <div id="region-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Seleccionar Región</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="map-container">
+                    <div id="map" class="map"></div>
+                    <div class="map-overlay">
+                        <div class="search-box">
+                            <input type="text" id="region-search" placeholder="Buscar región...">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <div class="selected-location" id="selected-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Haz clic en el mapa para seleccionar</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="regions-list" id="regions-list">
+                    <!-- Las regiones se cargarán dinámicamente -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

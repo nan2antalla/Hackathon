@@ -1,0 +1,660 @@
+/* Reset y estilos base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    color: #333;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    background: white;
+    box-shadow: none;
+}
+
+/* Panel izquierdo - Información del clima */
+.left-panel {
+    width: 50vw;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+.weather-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.weather-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+}
+
+.weather-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.weather-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    z-index: 2;
+}
+
+.weather-info h2 {
+    font-size: 4rem;
+    font-weight: 300;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+}
+
+.weather-info p {
+    font-size: 1.2rem;
+    opacity: 0.95;
+    margin-bottom: 0.3rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+    font-weight: 500;
+}
+
+.weather-details {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 2rem;
+    z-index: 3;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    font-weight: 500;
+}
+
+.detail-item i {
+    margin-right: 1rem;
+    width: 20px;
+    text-align: center;
+}
+
+/* Panel derecho - Formulario y pronósticos */
+.right-panel {
+    width: 50%;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    background: #f8f9fa;
+}
+
+.form-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    height: 50%;
+}
+
+.form-section h3 {
+    margin-bottom: 1.5rem;
+    color: #2d3436;
+    font-size: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #636e72;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #74b9ff;
+}
+
+.region-input-group {
+    position: relative;
+}
+
+.region-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #74b9ff;
+    border: none;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.region-btn:hover {
+    background: #0984e3;
+}
+
+.submit-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+    color: white;
+    border: none;
+    padding: 1rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+}
+
+.test-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #00b894 0%, #00a085 100%);
+    color: white;
+    border: none;
+    padding: 0.8rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    margin-top: 0.5rem;
+}
+
+.test-btn:hover {
+    transform: translateY(-2px);
+}
+
+/* Sección de pronósticos */
+.forecast-section {
+    flex: 1;
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.forecast-section h3 {
+    margin-bottom: 1.5rem;
+    color: #2d3436;
+    font-size: 1.5rem;
+}
+
+.forecast-cards {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    scrollbar-width: thin;
+    position: relative;
+}
+
+.forecast-cards::after {
+    content: '→';
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    font-size: 1.5rem;
+    color: #74b9ff;
+    opacity: 0.7;
+    pointer-events: none;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateX(0);
+    }
+    40% {
+        transform: translateX(5px);
+    }
+    60% {
+        transform: translateX(3px);
+    }
+}
+
+.forecast-card {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 1.5rem;
+    border-radius: 10px;
+    text-align: center;
+    border: 1px solid #e9ecef;
+    transition: transform 0.2s ease;
+    min-width: 180px;
+    flex-shrink: 0;
+}
+
+.forecast-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.forecast-card .time {
+    font-weight: 600;
+    color: #636e72;
+    margin-bottom: 0.5rem;
+}
+
+.forecast-card .temp {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2d3436;
+    margin-bottom: 0.5rem;
+}
+
+.forecast-card .description {
+    font-size: 0.9rem;
+    color: #74b9ff;
+    margin-bottom: 0.5rem;
+}
+
+.forecast-card .icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background-color: white;
+    margin: 2% auto;
+    padding: 0;
+    border-radius: 15px;
+    width: 95%;
+    max-width: 800px;
+    height: 90vh;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    animation: modalSlideIn 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid #e9ecef;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h3 {
+    margin: 0;
+    color: #2d3436;
+}
+
+.close {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close:hover {
+    color: #000;
+}
+
+.modal-body {
+    padding: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.map-container {
+    position: relative;
+    flex: 1;
+    min-height: 400px;
+}
+
+.map {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    position: relative;
+    cursor: crosshair;
+    background-image: 
+        radial-gradient(circle at 20% 30%, #81c784 2px, transparent 2px),
+        radial-gradient(circle at 80% 70%, #ffb74d 2px, transparent 2px),
+        radial-gradient(circle at 40% 60%, #64b5f6 2px, transparent 2px),
+        radial-gradient(circle at 60% 20%, #f06292 2px, transparent 2px);
+    background-size: 50px 50px, 60px 60px, 40px 40px, 45px 45px;
+}
+
+.map-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.map-overlay .search-box {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    pointer-events: all;
+    z-index: 20;
+}
+
+.map-overlay .selected-location {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    color: #2d3436;
+    pointer-events: all;
+    z-index: 20;
+}
+
+.map-marker {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #e74c3c;
+    border: 3px solid white;
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    z-index: 15;
+    pointer-events: none;
+}
+
+.map-marker::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    width: 8px;
+    height: 8px;
+    background: white;
+    border-radius: 50%;
+}
+
+.search-box {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 0.8rem 2.5rem 0.8rem 0.8rem;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.search-box i {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #74b9ff;
+}
+
+.regions-list {
+    max-height: 200px;
+    overflow-y: auto;
+    border-top: 1px solid #e9ecef;
+    background: #f8f9fa;
+}
+
+.region-item {
+    padding: 0.8rem;
+    border-bottom: 1px solid #f1f2f6;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.region-item:hover {
+    background-color: #e9ecef;
+    color: #74b9ff;
+}
+
+.region-item:last-child {
+    border-bottom: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        overflow: auto;
+    }
+    
+    .container {
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+    }
+    
+    .left-panel {
+        min-height: 40vh;
+    }
+    
+    .weather-info h2 {
+        font-size: 2.5rem;
+    }
+    
+    .right-panel {
+        padding: 1rem;
+    }
+    
+    .form-section,
+    .forecast-section {
+        padding: 1.5rem;
+    }
+    
+    .forecast-cards {
+        display: flex;
+        overflow-x: auto;
+    }
+    
+    .forecast-card {
+        min-width: 150px;
+    }
+    
+    .modal-content {
+        margin: 10% auto;
+        width: 95%;
+    }
+}
+
+@media (max-width: 480px) {
+    .weather-info h2 {
+        font-size: 2rem;
+    }
+    
+    .weather-info p {
+        font-size: 1rem;
+    }
+    
+    .forecast-cards {
+        display: flex;
+        overflow-x: auto;
+    }
+    
+    .forecast-card {
+        min-width: 140px;
+    }
+    
+    .detail-item {
+        font-size: 1rem;
+    }
+}
+
+/* Scrollbar personalizado */
+.forecast-cards::-webkit-scrollbar,
+.regions-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.forecast-cards::-webkit-scrollbar-track,
+.regions-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.forecast-cards::-webkit-scrollbar-thumb,
+.regions-list::-webkit-scrollbar-thumb {
+    background: #74b9ff;
+    border-radius: 3px;
+}
+
+.forecast-cards::-webkit-scrollbar-thumb:hover,
+.regions-list::-webkit-scrollbar-thumb:hover {
+    background: #0984e3;
+}
+
+/* Clase para forzar repaint cuando cambia el clima */
+.weather-changed {
+    animation: weatherChange 0.3s ease-in-out;
+}
+
+@keyframes weatherChange {
+    0% { opacity: 0.8; }
+    50% { opacity: 0.9; }
+    100% { opacity: 1; }
+}
+
+/* Animación de crossfade para cambio de clima */
+.weather-crossfade {
+    position: relative;
+    overflow: hidden;
+}
+
+.weather-crossfade::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: inherit;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 1;
+    animation: crossfadeOut 1s ease-in-out forwards;
+}
+
+.weather-crossfade::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: var(--new-bg-image);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 2;
+    opacity: 0;
+    animation: crossfadeIn 1s ease-in-out forwards;
+}
+
+@keyframes crossfadeOut {
+    0% { 
+        opacity: 1;
+    }
+    100% { 
+        opacity: 0;
+    }
+}
+
+@keyframes crossfadeIn {
+    0% { 
+        opacity: 0;
+    }
+    100% { 
+        opacity: 1;
+    }
+}
