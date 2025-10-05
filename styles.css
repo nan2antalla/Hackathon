@@ -116,19 +116,100 @@ body {
 /* Panel derecho - Formulario y pronósticos */
 .right-panel {
     width: 50%;
-    padding: 2rem;
+    padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
     background: #f8f9fa;
 }
 
+/* Header del panel derecho */
+.right-header {
+    padding: 1rem 2rem;
+    background: transparent;
+}
+
+.nasa-logo-container {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    justify-content: center;
+}
+
+.nasa-logo {
+    height: 35px;
+    width: auto;
+    transition: transform 0.3s ease;
+}
+
+.nasa-logo:hover {
+    transform: scale(1.05);
+}
+
+.header-text h2 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2d3436;
+    letter-spacing: -0.3px;
+}
+
+.header-text p {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #636e72;
+    font-weight: 400;
+}
+
+/* Footer del panel derecho */
+.right-footer {
+    background: rgb(0, 50, 160);
+    padding: 1rem 2rem;
+    color: white;
+    margin-top: auto;
+    box-shadow: 0 -2px 10px rgba(0, 50, 160, 0.3);
+}
+
+.footer-content {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    justify-content: center;
+}
+
+.space-apps-logo {
+    height: 40px;
+    width: auto;
+    filter: brightness(0) invert(1);
+    transition: transform 0.3s ease;
+}
+
+.space-apps-logo:hover {
+    transform: scale(1.05);
+}
+
+.footer-text {
+    text-align: center;
+}
+
+.footer-text p {
+    margin: 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.1rem;
+}
+
+.footer-text span {
+    font-size: 0.7rem;
+    opacity: 0.8;
+    font-weight: 400;
+}
+
 .form-section {
-    background: white;
     padding: 2rem;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-    height: 50%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .form-section h3 {
@@ -184,9 +265,16 @@ body {
     background: #0984e3;
 }
 
+.region-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+
 .submit-btn {
     width: 100%;
-    background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+    background: rgb(0, 50, 160);
     color: white;
     border: none;
     padding: 1rem;
@@ -194,38 +282,22 @@ body {
     font-size: 1.1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: transform 0.2s ease;
+    transition: all 0.3s ease;
 }
 
 .submit-btn:hover {
+    background: rgb(0, 40, 140);
     transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 50, 160, 0.4);
 }
 
-.test-btn {
-    width: 100%;
-    background: linear-gradient(135deg, #00b894 0%, #00a085 100%);
-    color: white;
-    border: none;
-    padding: 0.8rem;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-    margin-top: 0.5rem;
-}
-
-.test-btn:hover {
-    transform: translateY(-2px);
-}
 
 /* Sección de pronósticos */
 .forecast-section {
     flex: 1;
-    background: white;
     padding: 2rem;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
 }
 
 .forecast-section h3 {
@@ -515,6 +587,38 @@ body {
         min-height: 100vh;
     }
     
+    .right-header {
+        padding: 0.8rem 1rem;
+    }
+    
+    .nasa-logo {
+        height: 30px;
+    }
+    
+    .header-text h2 {
+        font-size: 1rem;
+    }
+    
+    .header-text p {
+        font-size: 0.7rem;
+    }
+    
+    .right-footer {
+        padding: 0.8rem 1rem;
+    }
+    
+    .space-apps-logo {
+        height: 25px;
+    }
+    
+    .footer-text p {
+        font-size: 0.75rem;
+    }
+    
+    .footer-text span {
+        font-size: 0.65rem;
+    }
+    
     .left-panel {
         min-height: 40vh;
     }
@@ -604,57 +708,33 @@ body {
     100% { opacity: 1; }
 }
 
-/* Animación de crossfade para cambio de clima */
-.weather-crossfade {
-    position: relative;
-    overflow: hidden;
+/* Animación de desvanecimiento para cambio de clima */
+.weather-fade-out {
+    animation: fadeOut 0.6s ease-in-out forwards;
 }
 
-.weather-crossfade::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: inherit;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    z-index: 1;
-    animation: crossfadeOut 1s ease-in-out forwards;
+.weather-fade-in {
+    animation: fadeIn 0.6s ease-in-out forwards;
 }
 
-.weather-crossfade::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: var(--new-bg-image);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    z-index: 2;
-    opacity: 0;
-    animation: crossfadeIn 1s ease-in-out forwards;
-}
-
-@keyframes crossfadeOut {
+@keyframes fadeOut {
     0% { 
         opacity: 1;
+        transform: scale(1);
     }
     100% { 
         opacity: 0;
+        transform: scale(0.98);
     }
 }
 
-@keyframes crossfadeIn {
+@keyframes fadeIn {
     0% { 
         opacity: 0;
+        transform: scale(1.02);
     }
     100% { 
         opacity: 1;
+        transform: scale(1);
     }
 }

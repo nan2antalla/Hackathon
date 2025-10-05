@@ -113,17 +113,7 @@ function setupEventListeners() {
         handleWeatherFormSubmit();
     });
     
-    // Botón de prueba para cambiar clima
-    const testWeatherBtn = document.getElementById('test-weather-btn');
-    if (testWeatherBtn) {
-        testWeatherBtn.addEventListener('click', function() {
-            console.log('Event listener del botón de prueba activado');
-            testWeatherChange();
-        });
-        console.log('Event listener agregado al botón de prueba');
-    } else {
-        console.error('No se encontró el botón de prueba');
-    }
+    
 }
 
 function loadRegions() {
@@ -251,6 +241,7 @@ function findClosestRegion(lat, lng) {
 function confirmLocation() {
     if (selectedLocation) {
         selectRegion(selectedLocation.name);
+        // El mini mapa se actualizará automáticamente en selectRegion
     }
 }
 
@@ -445,9 +436,9 @@ function updateDateInput() {
 // Actualizar la fecha cada día a medianoche
 setInterval(updateDateInput, 24 * 60 * 60 * 1000);
 
-// Función genérica para cambiar clima con animación de crossfade
+// Función genérica para cambiar clima con animación de desvanecimiento
 function changeWeatherWithFade(weatherData, region = 'Madrid, España') {
-    console.log('=== CAMBIO DE CLIMA CON CROSSFADE ===');
+    console.log('=== CAMBIO DE CLIMA CON DESVANECIMIENTO ===');
     console.log('Datos del clima:', weatherData);
     console.log('Región:', region);
     
@@ -479,173 +470,44 @@ function changeWeatherWithFade(weatherData, region = 'Madrid, España') {
     console.log('Tipo de clima detectado:', weatherType);
     console.log('Imagen correspondiente:', weatherImage);
     
-    // PASO 1: Actualizar información del clima inmediatamente
-    document.getElementById('current-temp').textContent = weatherData.temp;
-    document.getElementById('weather-description').textContent = weatherData.description;
-    document.getElementById('location').textContent = region;
+    // PASO 1: Iniciar desvanecimiento (fade out)
+    leftPanel.classList.add('weather-fade-out');
+    console.log('Iniciando fade out...');
     
-    // Actualizar imagen del elemento img
-    const weatherImageElement = document.getElementById('weather-icon');
-    if (weatherImageElement) {
-        weatherImageElement.src = weatherImage;
-    }
-    
-    // PASO 2: Configurar la nueva imagen para el crossfade
-    leftPanel.style.setProperty('--new-bg-image', `url(${weatherImage})`);
-    
-    // PASO 3: Iniciar animación de crossfade
-    leftPanel.classList.add('weather-crossfade');
-    console.log('Iniciando crossfade...');
-    
-    // PASO 4: Después de la animación, actualizar el fondo y limpiar
+    // PASO 2: Después del fade out, cambiar el contenido
     setTimeout(() => {
-        // Actualizar imagen de fondo final
+        console.log('Cambiando contenido durante fade out...');
+        
+        // Actualizar información del clima
+        document.getElementById('current-temp').textContent = weatherData.temp;
+        document.getElementById('weather-description').textContent = weatherData.description;
+        document.getElementById('location').textContent = region;
+        
+        // Actualizar imagen del elemento img
+        const weatherImageElement = document.getElementById('weather-icon');
+        if (weatherImageElement) {
+            weatherImageElement.src = weatherImage;
+        }
+        
+        // Actualizar imagen de fondo
         leftPanel.style.setProperty('background-image', `url(${weatherImage})`, 'important');
         leftPanel.style.setProperty('background-size', 'cover', 'important');
         leftPanel.style.setProperty('background-position', 'center', 'important');
         leftPanel.style.setProperty('background-repeat', 'no-repeat', 'important');
         
-        // Limpiar clases y variables CSS
-        leftPanel.classList.remove('weather-crossfade');
-        leftPanel.style.removeProperty('--new-bg-image');
+        // Remover clase de fade out y agregar fade in
+        leftPanel.classList.remove('weather-fade-out');
+        leftPanel.classList.add('weather-fade-in');
+        console.log('Iniciando fade in...');
         
-        console.log('Crossfade completado');
-    }, 1000); // Duración de la animación
-}
-
-// Función de prueba para cambiar el clima
-function testWeatherChange() {
-    console.log('=== INICIO FUNCIÓN DE PRUEBA ===');
-    console.log('Botón de prueba presionado');
-    
-    // Simular datos de clima aleatorio
-    const weatherVariations = [
-        { temp: '25°C', description: 'Soleado', icon: '☀️' },
-        { temp: '22°C', description: 'Parcialmente nublado', icon: '⛅' },
-        { temp: '20°C', description: 'Nublado', icon: '☁️' },
-        { temp: '18°C', description: 'Lluvia ligera', icon: '🌦️' },
-        { temp: '15°C', description: 'Lluvia intensa', icon: '🌧️' },
-        { temp: '12°C', description: 'Tormenta', icon: '⛈️' },
-        { temp: '8°C', description: 'Nieve', icon: '❄️' },
-        { temp: '16°C', description: 'Niebla', icon: '🌫️' },
-        { temp: '24°C', description: 'Amanecer', icon: '🌅' },
-        { temp: '26°C', description: 'Atardecer', icon: '🌇' },
-        { temp: '14°C', description: 'Noche estrellada', icon: '🌌' },
-        { temp: '21°C', description: 'Arcoíris', icon: '🌈' }
-    ];
-    
-    // Seleccionar clima aleatorio
-    const randomWeather = weatherVariations[Math.floor(Math.random() * weatherVariations.length)];
-    console.log('Clima aleatorio seleccionado:', randomWeather);
-    
-    // Usar la nueva función con animación de fade
-    const region = document.getElementById('region-input').value || 'Madrid, España';
-    changeWeatherWithFade(randomWeather, region);
-    
-    // Mostrar mensaje de confirmación
-    const testBtn = document.getElementById('test-weather-btn');
-    if (testBtn) {
-        const originalText = testBtn.textContent;
-        testBtn.textContent = '¡Clima actualizado!';
-        testBtn.style.background = 'linear-gradient(135deg, #00b894 0%, #00a085 100%)';
-        
+        // PASO 3: Remover clase de fade in después de la animación
         setTimeout(() => {
-            testBtn.textContent = originalText;
-            testBtn.style.background = 'linear-gradient(135deg, #00b894 0%, #00a085 100%)';
-        }, 2000);
-    }
-    
-    console.log('=== FIN FUNCIÓN DE PRUEBA ===');
+            leftPanel.classList.remove('weather-fade-in');
+            console.log('Animación de desvanecimiento completada');
+        }, 600);
+        
+    }, 600); // Esperar a que termine el fade out
 }
 
-// Función alternativa para cambiar imagen usando innerHTML
-function testWeatherChangeAlternative() {
-    console.log('=== MÉTODO ALTERNATIVO ===');
-    
-    // Simular datos de clima aleatorio
-    const weatherVariations = [
-        { temp: '25°C', description: 'Soleado', icon: '☀️' },
-        { temp: '22°C', description: 'Parcialmente nublado', icon: '⛅' },
-        { temp: '20°C', description: 'Nublado', icon: '☁️' },
-        { temp: '18°C', description: 'Lluvia ligera', icon: '🌦️' },
-        { temp: '15°C', description: 'Lluvia intensa', icon: '🌧️' },
-        { temp: '12°C', description: 'Tormenta', icon: '⛈️' },
-        { temp: '8°C', description: 'Nieve', icon: '❄️' },
-        { temp: '16°C', description: 'Niebla', icon: '🌫️' },
-        { temp: '24°C', description: 'Amanecer', icon: '🌅' },
-        { temp: '26°C', description: 'Atardecer', icon: '🌇' },
-        { temp: '14°C', description: 'Noche estrellada', icon: '🌌' },
-        { temp: '21°C', description: 'Arcoíris', icon: '🌈' }
-    ];
-    
-    // Seleccionar clima aleatorio
-    const randomWeather = weatherVariations[Math.floor(Math.random() * weatherVariations.length)];
-    console.log('Clima aleatorio alternativo:', randomWeather);
-    
-    // Mapeo de tipos de clima a imágenes locales
-    const weatherImageMap = {
-        'soleado': 'images/Soleado.jpg',
-        'parcialmente_nublado': 'images/parcialmente_nublado.jpg',
-        'nublado': 'images/nublado.jpg',
-        'lluvia_ligera': 'images/lluvia_ligera.jpg',
-        'lluvia_intensa': 'images/lluvia_intensa.jpg',
-        'nieve': 'images/nieve.jpg',
-        'tormenta': 'images/tormenta.jpg',
-        'niebla': 'images/niebla.jpg',
-        'amanecer': 'images/amanecer.jpg',
-        'atardecer': 'images/atardecer.jpg',
-        'noche_estrellada': 'images/noche_estrellada.jpg',
-        'arcoiris': 'images/arcoiris.jpg'
-    };
-    
-    // Obtener imagen basada en la descripción del clima
-    const weatherType = getWeatherTypeFromDescription(randomWeather.description);
-    const weatherImage = weatherImageMap[weatherType] || weatherImageMap['soleado'];
-    console.log('Tipo de clima alternativo:', weatherType);
-    console.log('Imagen correspondiente:', weatherImage);
-    
-    // Cambiar el HTML del panel izquierdo completamente
-    const leftPanel = document.querySelector('.left-panel');
-    if (leftPanel) {
-        leftPanel.innerHTML = `
-            <div class="weather-main">
-                <div class="weather-image">
-                    <img id="weather-icon" src="${weatherImage}" alt="Clima actual">
-                    <div class="weather-overlay">
-                        <div class="weather-info">
-                            <h2 id="current-temp">${randomWeather.temp}</h2>
-                            <p id="weather-description">${randomWeather.description}</p>
-                            <p id="location">Madrid, España</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="weather-details">
-                    <div class="detail-item">
-                        <i class="fas fa-eye"></i>
-                        <span>Visibilidad: 10 km</span>
-                    </div>
-                    <div class="detail-item">
-                        <i class="fas fa-tint"></i>
-                        <span>Humedad: 65%</span>
-                    </div>
-                    <div class="detail-item">
-                        <i class="fas fa-wind"></i>
-                        <span>Viento: 15 km/h</span>
-                    </div>
-                    <div class="detail-item">
-                        <i class="fas fa-thermometer-half"></i>
-                        <span>Sensación: 24°C</span>
-                    </div>
-                </div>
-            </div>
-        `;
-        
-        // Aplicar también el fondo al panel
-        leftPanel.style.backgroundImage = `url(${weatherImage})`;
-        leftPanel.style.backgroundSize = 'cover';
-        leftPanel.style.backgroundPosition = 'center';
-        leftPanel.style.backgroundRepeat = 'no-repeat';
-        
-        console.log('HTML del panel izquierdo reemplazado completamente con imagen correspondiente');
-    }
-}
+
+
